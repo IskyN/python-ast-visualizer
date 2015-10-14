@@ -133,7 +133,7 @@ class GraphRenderer:
             elif isinstance(node, list):
                 self._render_list(node, node_id)
             else:
-                self._graph.node(node_id, label=self._escape_dot_label(repr(str(node))))
+                self._graph.node(node_id, label=self._escape_dot_label(repr(node)))
 
         return node_id
 
