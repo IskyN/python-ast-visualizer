@@ -133,11 +133,19 @@ class GraphRenderer:
 
     _graph = None
     _rendered_nodes = None
+    _max_label_len = 100
 
 
     @staticmethod
     def _escape_dot_label(str):
         return str.replace("\\", "\\\\").replace("|", "\\|").replace("<", "\\<").replace(">", "\\>")
+
+
+    def _shorten_string(self, string):
+        if len(string) > self._max_label_len - 3:
+            halflen = int((self._max_label_len - 3) / 2)
+            return string[:halflen] + "..." + string[-halflen:]
+        return string
 
 
     def _render_node(self, node):
@@ -154,7 +162,7 @@ class GraphRenderer:
             elif isinstance(node, list):
                 self._render_list(node, node_id)
             else:
-                self._graph.node(node_id, label=self._escape_dot_label(repr(node)))
+                self._graph.node(node_id, label=self._escape_dot_label(self._shorten_string(repr(node))))
 
         return node_id
 
